@@ -67,6 +67,7 @@ def deliver_message(bot, trigger):
 	receiver = receiver.lower()
 
 	if not session.query(Message).filter_by(nick_to=receiver).first():
+		session.close()
 		return
 
 	messages = session.query(Message).filter_by(nick_to=receiver).all()
