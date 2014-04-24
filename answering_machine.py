@@ -4,6 +4,7 @@ from willie.tools import Nick
 from sqlalchemy import create_engine, Column, String, Integer, Text, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.exc import OperationalError
 
 from datetime import datetime
 from os import path
@@ -49,7 +50,7 @@ def catch_message(bot, trigger):
 		try:
 			session.add(message)
 			session.commit()
-		except:
+		except OperationalError:
 			session.rollback()
 		finally:
 			session.close()
@@ -73,7 +74,7 @@ def deliver_message(bot, trigger):
 		try:
 			session.delete(message)
 			session.commit()
-		except:
+		except OperationalError:
 			session.rollback()
 	session.close()
 	return
