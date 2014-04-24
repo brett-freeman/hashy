@@ -7,11 +7,12 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import OperationalError
 
 from datetime import datetime
-from os import path
+from os import path, environ
 
 basedir = path.abspath(path.dirname(__file__))
 Base = declarative_base()
-db = create_engine('sqlite:///' + path.join(basedir, 'data.sqlite'))
+database_url = environ.get('HASHY_DATABASE_URL') if environ.get('HASHY_DATABASE_URL') else 'sqlite:////home/vagrant/am.db'
+db = create_engine(database_url)
 Session = sessionmaker(bind=db)
 
 class Message(Base):
