@@ -72,7 +72,7 @@ def deliver_message(bot, trigger):
 
 	messages = session.query(Message).filter_by(nick_to=receiver).all()
 	for message in messages:
-		bot.reply("%s says %s" % (message.nick_from, message.msg))
+		bot.reply("%s (from %s)" % (message.msg, message.nick_from))
 		try:
 			session.delete(message)
 			session.commit()
