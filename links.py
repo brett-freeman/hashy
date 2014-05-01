@@ -26,6 +26,9 @@ class Link(Base):
 
 @rule('(?u).*(https?://\S+).*')
 def catch_link(bot, trigger):
+	if trigger.sender == '#hashy':
+		return
+
 	urls = re.findall(url_finder, trigger)
 	if urls:
 		session = Session()
